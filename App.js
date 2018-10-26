@@ -1,23 +1,26 @@
 import React, { Component} from 'react';
 import { View } from 'react-native';
-import Map from './components/Map';
+import MapScreen from './screens/MapScreen';
+import WelcomeScreen from './screens/WelcomeScreen'
+import { createBottomTabNavigator} from 'react-navigation';
 
 export default class App extends Component {
 
   render() {
+
+    const MainNavigator = createBottomTabNavigator({
+      welcome: WelcomeScreen,
+      map: MapScreen
+    }, {
+      navigationOptions: {
+        tabBarVisible: false
+      }
+    });
+
     return (
         <View style={{flex:1}}>
-         <Map style={{flex:1}}/>
+          <MainNavigator/>
         </View>
     );
   }
 }
-
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-};
