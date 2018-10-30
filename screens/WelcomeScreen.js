@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions } from 'react-native';
-import { Button, Icon} from 'react-native-elements'
+import { Button } from 'react-native-elements'
 import FadeInView from '../components/fadeInView';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;

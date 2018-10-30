@@ -7,7 +7,6 @@ import { createBottomTabNavigator} from 'react-navigation';
 export default class App extends Component {
 
   render() {
-
     const MainNavigator = createBottomTabNavigator({
       welcome: WelcomeScreen,
       map: MapScreen
