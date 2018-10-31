@@ -1,38 +1,31 @@
 import React, { Component } from 'react';
-import { View as ViewReactNative, WebView } from 'react-native';
+import { View as ViewReactNative, WebView, Text } from 'react-native';
+import {Spinner} from '../components/Spinner';
 import { Button } from 'react-native-elements';
-
-import { endHtml } from '../utils/end';
-import { beginHtml } from '../utils/begin';
-import { initialMap } from '../openalyers/initialMap';
-import { onPressButton } from '../openalyers/onPress';
+import { connect } from 'react-redux';
+import { fetchAll } from '../actions';
 
 class MapScreen extends Component {
 
+  componentDidMount() {
+    this.props.fetchAll();
+  }
+
+  renderLoading() {
+    if (this.props.loading) return <Spinner size="large"/>;
+  }
+  renderStation() {
+    return (
+        this.props.allStation.map(city =>
+            (<Text key={city.id}>{city.stationName}</Text>),
+        ));
+  }
+
   render() {
-    const html1 = `${beginHtml}${initialMap}${endHtml}`;
-    const html = `${beginHtml}${onPressButton}${endHtml}`;
-
-    console.log(html);
-
     return (
         <ViewReactNative style={{flex: 1}}>
-          <WebView
-              style={{flex: 1}}
-              ref={webview => { this.webview = webview; }}
-              source={{html}}
-              /* onMessage={this.onMessage}*/
-              /*useWebKit*/
-          />
-          <ViewReactNative style={styles.buttonContainer}>
-            <Button
-                large
-                title="Search This Area"
-                backgroundColor="#009688"
-                icon={{name: 'search'}}
-                onPress={() => {}}
-            />
-          </ViewReactNative>
+          {this.props.loading && this.renderLoading()}
+        {this.props.allStation && !this.props.loading && this.renderStation()}
         </ViewReactNative>
     );
   }
@@ -46,5 +39,11 @@ const styles = {
     right: 0,
   },
 };
-
-export default MapScreen;
+const mapStateToProps = state => (
+    {
+      allStation: state.air.allStation,
+      stationId: state.air.stationId,
+      loading: state.air.loading,
+    }
+);
+export default connect(mapStateToProps, {fetchAll})(MapScreen);
