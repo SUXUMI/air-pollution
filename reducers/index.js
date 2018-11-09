@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import FetchReducer from './fetch_reducer';
+import FetchReducer from './fetchReducer';
 
 const rootReducer = combineReducers({
   air: FetchReducer,

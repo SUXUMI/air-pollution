@@ -1,5 +1,4 @@
-export const endHtml =
-`</script>
+export const endHtml = `</script>
 </body>
 </html>
 `;

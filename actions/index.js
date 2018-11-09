@@ -2,10 +2,10 @@ import axios from 'axios';
 import {
   FETCH_ALL_DATA,
   FETCH_BY_STATION_ID,
-    LOADING_LIST
+  LOADING_LIST,
 } from './types';
 
-const BASE_URL= `http://api.gios.gov.pl/pjp-api/rest/station/`;
+const BASE_URL = 'http://api.gios.gov.pl/pjp-api/rest/station/';
 
 export function loading(bool) {
   return {
@@ -14,8 +14,8 @@ export function loading(bool) {
   };
 }
 
-export function fetchAll(){
-  const URL=`${BASE_URL}findAll`;
+export function fetchAll() {
+  const URL = `${BASE_URL}findAll`;
   const request = axios.get(URL);
 
   return (dispatch) => {
@@ -26,20 +26,18 @@ export function fetchAll(){
         type: FETCH_ALL_DATA,
         payload: response,
       });
-    }).catch((e) => console.log(e));
+    }).catch(e => console.log(e));// eslint-disable-line no-console
   };
 }
 
-export function fetchByStationId({id}){
-  const URL=`${BASE_URL}sensors/${id}`;
+export function fetchByStationId({ id }) {
+  const URL = `${BASE_URL}sensors/${id}`;
   const request = axios.get(URL);
 
   return (dispatch) => {
-    request.then((response) => {
-      return dispatch({
-        type: FETCH_BY_STATION_ID,
-        payload: response,
-      });
-    }).catch((e) => console.log(e));
+    request.then(response => dispatch({
+      type: FETCH_BY_STATION_ID,
+      payload: response,
+    })).catch(e => console.log(e));// eslint-disable-line no-console
   };
 }

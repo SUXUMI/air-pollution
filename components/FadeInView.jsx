@@ -1,23 +1,30 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Animated } from 'react-native';
+import PropTypes from 'prop-types';
 
 class FadeInView extends Component {
+
+  static propTypes = {
+    style: PropTypes.object.isRequired,
+  };
+
   state = {
-    fadeAnim: new Animated.Value(0),  // value for opacity
+    fadeAnim: new Animated.Value(0),
   };
 
   componentDidMount() {
+
     Animated.timing(
-        this.state.fadeAnim,
+        this.state.fadeAnim, // eslint-disable-line react/destructuring-assignment
         {
           toValue: 1,
           duration: 5000,
-        }
+        },
     ).start();
   }
 
   render() {
-    let { fadeAnim } = this.state;
+    const {fadeAnim} = this.state;
 
     return (
         <Animated.View
@@ -25,7 +32,6 @@ class FadeInView extends Component {
               ...this.props.style,
               opacity: fadeAnim,
             }}
-
         >
           {this.props.children}
         </Animated.View>
