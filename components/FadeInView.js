@@ -3,9 +3,9 @@ import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
 
 class FadeInView extends Component {
-
   static propTypes = {
     style: PropTypes.object.isRequired,
+    children: PropTypes.object.isRequired,
   };
 
   state = {
@@ -13,28 +13,28 @@ class FadeInView extends Component {
   };
 
   componentDidMount() {
-
     Animated.timing(
-        this.state.fadeAnim, // eslint-disable-line react/destructuring-assignment
-        {
-          toValue: 1,
-          duration: 5000,
-        },
+      this.state.fadeAnim, // eslint-disable-line react/destructuring-assignment
+      {
+        toValue: 1,
+        duration: 5000,
+      },
     ).start();
   }
 
   render() {
-    const {fadeAnim} = this.state;
+    const { fadeAnim } = this.state;
+    const { children, style } = this.props;
 
     return (
-        <Animated.View
-            style={{
-              ...this.props.style,
-              opacity: fadeAnim,
-            }}
-        >
-          {this.props.children}
-        </Animated.View>
+      <Animated.View
+        style={{
+          ...style,
+          opacity: fadeAnim,
+        }}
+      >
+        {children}
+      </Animated.View>
     );
   }
 }

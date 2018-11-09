@@ -10,16 +10,20 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 class WelcomeScreen extends Component {
   static propTypes ={
     navigation: PropTypes.object.isRequired,
-    navigate: PropTypes.object.isRequired,
+    navigate: PropTypes.object,
+  };
+
+  static defaultProps ={
+    navigate: {},
   };
 
   render() {
+    const { container, fadeInStyle, textStyle } = styles;
 
-    const {navigate} =this.props.navigation;
     return (
-      <View style={styles.container}>
-        <FadeInView style={styles.fadeInStyle}>
-          <Text style={styles.textStyle}>
+      <View style={container}>
+        <FadeInView style={fadeInStyle}>
+          <Text style={textStyle}>
               Welcome to polish air pollution App based on gios.gov.pl stations
           </Text>
         </FadeInView>
@@ -28,7 +32,7 @@ class WelcomeScreen extends Component {
           title="Tap me!"
           backgroundColor="#009688"
           iconRight={{ name: 'keyboard-backspace' }}
-          onPress={() => navigate('map')}
+          onPress={() => this.props.navigation.navigate('map')} // eslint-disable-line  react/destructuring-assignment
         />
       </View>
     );

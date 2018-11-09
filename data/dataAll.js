@@ -1,6 +1,6 @@
 /*http://api.gios.gov.pl/pjp-api/rest/station/findAll */
 
-const data1 = [
+const dataAll = [
   {
     id: 114,
     stationName: "Wrocław - Bartnicza",
@@ -2611,4 +2611,4 @@ const data1 = [
   }
 ]
 
-export {data1}
+export {dataAll}

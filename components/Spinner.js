@@ -17,7 +17,7 @@ const styles = {
 };
 
 Spinner.propTypes = {
-  size: PropTypes.string.isRequired
+  size: PropTypes.string.isRequired,
 };
 
 export { Spinner };

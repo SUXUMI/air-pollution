@@ -30,14 +30,18 @@ export function fetchAll() {
   };
 }
 
-export function fetchByStationId({ id }) {
+export function fetchByStationId(id) {
   const URL = `${BASE_URL}sensors/${id}`;
   const request = axios.get(URL);
 
   return (dispatch) => {
-    request.then(response => dispatch({
-      type: FETCH_BY_STATION_ID,
-      payload: response,
-    })).catch(e => console.log(e));// eslint-disable-line no-console
+    dispatch(loading(true));
+    request.then((response) => {
+      dispatch(loading(false));
+      return dispatch({
+        type: FETCH_BY_STATION_ID,
+        payload: response,
+      });
+    }).catch(e => console.log(e));// eslint-disable-line no-console
   };
 }
