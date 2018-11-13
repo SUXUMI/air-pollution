@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  TouchableOpacity,
+  View,
   ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { ListItem } from 'react-native-elements';
 
 import { Spinner } from '../components/Spinner';
-import { fetchAll, fetchByStationId } from '../actions';
+import { fetchAll } from '../actions';
 
 class MapScreen extends Component {
   static propTypes = {
     fetchAll: PropTypes.func.isRequired,
     loading: PropTypes.bool,
-    allStation: PropTypes.arrayOf(PropTypes.object),
+    allStation: PropTypes.arrayOf(PropTypes.object).isRequired,
+    navigation: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -25,33 +26,34 @@ class MapScreen extends Component {
     this.props.fetchAll();// eslint-disable-line react/destructuring-assignment
   }
 
-  getStationInformation = (id) => {
-    this.props.fetchByStationId(id);
-  };
-
-  renderLoading() { // eslint-disable-line  consistent-return
-    if (this.props.loading) return <Spinner size="large" />; // eslint-disable-line react/destructuring-assignment
-  }
-
   renderStation() {
+    const { allStation, navigation } = this.props;
     return (
-      this.props.allStation.map(city => (
-        <TouchableOpacity
-          onPress={() => {}}
-          key={city.id}
-        >
-          <Text key={city.id}>
-            {city.stationName}
-          </Text>
-        </TouchableOpacity>
-      )));
+      <View>
+        {
+            allStation.map(city => (
+              <ListItem
+                key={city.id}
+                title={city.stationName}
+                onPressRightIcon={() => {
+                  navigation.navigate('show', { stationId: city.id });
+                }}
+              />
+            ))
+          }
+      </View>
+    );
   }
 
   render() {
     const { loading, allStation } = this.props;
+
+    if (loading) {
+      return <Spinner size="large" />;
+    }
+
     return (
       <ScrollView style={{ flex: 1 }}>
-        {loading && this.renderLoading()}
         {allStation && !loading && this.renderStation()}
       </ScrollView>
     );
@@ -62,10 +64,8 @@ const mapStateToProps = state => (
   {
     allStation: state.air.allStation,
     loading: state.air.loading,
-    stationId: state.air.stationId,
+    byStationId: state.air.byStationId,
   }
 );
 
-export default connect(mapStateToProps, { fetchAll, fetchByStationId })(
-  MapScreen,
-);
+export default connect(mapStateToProps, { fetchAll })(MapScreen);

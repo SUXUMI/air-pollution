@@ -1,6 +1,7 @@
 import {
   FETCH_ALL_DATA,
   FETCH_BY_STATION_ID,
+  FETCH_BY_SENSOR_ID,
 } from '../actions/types';
 
 export default (state = {}, action) => {
@@ -15,7 +16,14 @@ export default (state = {}, action) => {
     case FETCH_BY_STATION_ID: {
       return {
         ...state,
-        stationId: action.payload.data,
+        byStationId: action.payload.data,
+        loading: false,
+      };
+    }
+    case FETCH_BY_SENSOR_ID: {
+      return {
+        ...state,
+        bySensorId: action.payload.data,
         loading: false,
       };
     }

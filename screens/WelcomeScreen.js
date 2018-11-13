@@ -32,7 +32,7 @@ class WelcomeScreen extends Component {
           title="Tap me!"
           backgroundColor="#009688"
           iconRight={{ name: 'keyboard-backspace' }}
-          onPress={() => this.props.navigation.navigate('map')} // eslint-disable-line  react/destructuring-assignment
+          onPress={() => this.props.navigation.navigate('main')} // eslint-disable-line  react/destructuring-assignment
         />
       </View>
     );

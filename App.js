@@ -1,8 +1,12 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
 import MapScreen from './screens/MapScreen';
-import WelcomeScreen from './screens/WelcomeScreen'
-import { createBottomTabNavigator} from 'react-navigation';
+import WelcomeScreen from './screens/WelcomeScreen';
+import ShowScreen from './screens/ShowScreen';
+import {
+  createBottomTabNavigator,
+  createStackNavigator,
+} from 'react-navigation';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
@@ -15,11 +19,14 @@ export default class App extends Component {
   render() {
     const MainNavigator = createBottomTabNavigator({
       welcome: WelcomeScreen,
-      map: MapScreen
+      main: createStackNavigator({
+        map: MapScreen,
+        show: ShowScreen,
+      }),
     }, {
       navigationOptions: {
-        tabBarVisible: false
-      }
+        tabBarVisible: false,
+      },
     });
 
     const store = createStore(
@@ -29,9 +36,9 @@ export default class App extends Component {
 
     return (
         <Provider store={store}>
-        <View style={{flex:1}}>
-          <MainNavigator/>
-        </View>
+          <View style={{flex: 1}}>
+            <MainNavigator/>
+          </View>
         </Provider>
     );
   }
