@@ -3,7 +3,8 @@ import {
   FETCH_ALL_DATA,
   FETCH_BY_STATION_ID,
   LOADING_LIST,
-  FETCH_BY_SENSOR_ID,
+  ADD_VALUE_FOR_SENSORS,
+  FETCH_BY_INDEX,
 } from './types';
 
 const BASE_URL = 'http://api.gios.gov.pl/pjp-api/rest/station/';
@@ -38,7 +39,6 @@ export function fetchByStationId(id) {
   return (dispatch) => {
     dispatch(loading(true));
     request.then((response) => {
-      // console.log(response.data);
       dispatch(loading(false));
       return dispatch({
         type: FETCH_BY_STATION_ID,
@@ -57,7 +57,23 @@ export function fetchBySensorId(id) {
     request.then((response) => {
       dispatch(loading(false));
       return dispatch({
-        type: FETCH_BY_SENSOR_ID,
+        type: ADD_VALUE_FOR_SENSORS,
+        payload: response
+      });
+    }).catch(e => console.log(e));// eslint-disable-line no-console
+  };
+}
+
+export function getIndex(id) {
+  const URL = `http://api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/${id}`;
+  const request = axios.get(URL);
+
+  return (dispatch) => {
+    dispatch(loading(true));
+    request.then((response) => {
+      dispatch(loading(false));
+      return dispatch({
+        type: FETCH_BY_INDEX,
         payload: response,
       });
     }).catch(e => console.log(e));// eslint-disable-line no-console

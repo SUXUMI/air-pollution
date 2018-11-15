@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import FetchReducer from './fetchReducer';
+import allReducer from './fetchAllReducer';
+import stationReducer from './fetchByStationReducer';
 
 const rootReducer = combineReducers({
-  air: FetchReducer,
+  allReducer,
+  stationReducer
 });
 
 export default rootReducer;

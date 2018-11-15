@@ -8,13 +8,13 @@ import PropTypes from 'prop-types';
 import { ListItem } from 'react-native-elements';
 
 import { Spinner } from '../components/Spinner';
-import { fetchAll } from '../actions';
+import { fetchAll} from '../actions';
 
 class MapScreen extends Component {
   static propTypes = {
     fetchAll: PropTypes.func.isRequired,
     loading: PropTypes.bool,
-    allStation: PropTypes.arrayOf(PropTypes.object).isRequired,
+    allStation: PropTypes.arrayOf(PropTypes.object),
     navigation: PropTypes.object.isRequired,
   };
 
@@ -62,9 +62,8 @@ class MapScreen extends Component {
 
 const mapStateToProps = state => (
   {
-    allStation: state.air.allStation,
-    loading: state.air.loading,
-    byStationId: state.air.byStationId,
+    allStation: state.allReducer.allStation,
+    loading: state.allReducer.loading
   }
 );
 

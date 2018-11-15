@@ -7,12 +7,9 @@ import {
   createBottomTabNavigator,
   createStackNavigator,
 } from 'react-navigation';
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import {store} from './store';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 
-import reducers from './reducers/index';
 
 export default class App extends Component {
 
@@ -28,11 +25,6 @@ export default class App extends Component {
         tabBarVisible: false,
       },
     });
-
-    const store = createStore(
-        reducers,
-        composeWithDevTools(applyMiddleware(thunk)),
-    );
 
     return (
         <Provider store={store}>
