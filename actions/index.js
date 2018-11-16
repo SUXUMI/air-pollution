@@ -58,11 +58,12 @@ export function fetchBySensorId(id) {
       dispatch(loading(false));
       return dispatch({
         type: ADD_VALUE_FOR_SENSORS,
-        payload: response
+        payload: response,
       });
     }).catch(e => console.log(e));// eslint-disable-line no-console
   };
 }
+
 
 export function getIndex(id) {
   const URL = `http://api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/${id}`;

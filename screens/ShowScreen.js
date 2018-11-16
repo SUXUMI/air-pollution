@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Card, Button } from 'react-native-elements';
-import { fetchByStationId, fetchBySensorId } from '../actions';
+import { Card, Button, ListItem } from 'react-native-elements';
+import {
+  fetchByStationId,
+  fetchBySensorId,
+} from '../actions';
 import { Spinner } from '../components/Spinner';
 
 class ShowScreen extends Component {
@@ -35,29 +38,38 @@ class ShowScreen extends Component {
     this.props.fetchByStationId(stationId);
   }
 
+  sensorId() {
+    this.props.stations.map(station => {
+      return this.props.fetchBySensorId(station.id);
+    })
+  };
+
   renderCard() {
     return (
         <Card title="VALUES" containerStyle={containerStyle}>
           {
-            this.props.stations.map(u => (
-                <View key={u.id}>
-                  <Text>{u.param.paramFormula}</Text>
+            this.props.sensors.map(u=> (
+                <View key={Math.random()}>
+                  <Text>{u.key}</Text>
                 </View>
-            ))
-          }
+              ))
+              }
+          })
         </Card>
     );
   }
 
   render() {
-    const {loading, stationId} = this.props;
+
+    const {loading, stations } = this.props;
 
     if (loading) {
       return <Spinner size="large"/>;
     }
     return (
         <View style={{flex: 1}}>
-          {stationId && !loading && this.renderCard()}
+         {/* {stations && !loading && this.renderCard()}*/}
+          {stations && this.sensorId() && !loading && this.renderCard()}
         </View>
     );
   }
@@ -66,12 +78,14 @@ class ShowScreen extends Component {
 const mapStateToProps = state => ({
   allStation: state.allReducer.allStation,
   stations: state.stationReducer.stations,
-  value: state.stationReducer.stations,
   loading: state.stationReducer.loading,
+  sensors: state.stationReducer.sensors,
+
 });
 
 const containerStyle = {
   marginTop: 20,
 };
 
-export default connect(mapStateToProps, {fetchByStationId,fetchBySensorId})(ShowScreen);
+export default connect(mapStateToProps,
+    {fetchByStationId, fetchBySensorId})(ShowScreen);

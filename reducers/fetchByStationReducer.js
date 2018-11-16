@@ -8,22 +8,17 @@ import {
 const INITIAL_STATE = {
   error: '',
   loading: false,
-  value: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_BY_STATION_ID: {
-      return {...state, stations: action.payload.data, loading: false};
+      return {...state, stations: action.payload.data};
     }
     case ADD_VALUE_FOR_SENSORS: {
       return {
-        ...state,
-        stations: state.stations.map(el => ({
-          ...el,
-          value: action.payload.data.values[0].value
-        }))
-      };
+        ...state, sensors:{...state.sensors, [action.payload.data.key]: action.payload.data.values[1].value}
+      }
     }
     case LOADING_ERROR:
       return {...state, error: 'Something went wrong'};
