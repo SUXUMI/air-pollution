@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { Card, Button, ListItem } from 'react-native-elements';
 import {
   fetchByStationId,
-  fetchBySensorId,
+  reset,
 } from '../actions';
 import { Spinner } from '../components/Spinner';
+import { RESET } from '../actions/types';
 
 class ShowScreen extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -25,12 +26,13 @@ class ShowScreen extends Component {
     loading: PropTypes.bool,
     navigation: PropTypes.object.isRequired,
     fetchByStationId: PropTypes.func.isRequired,
-    stations: PropTypes.arrayOf(PropTypes.object),
+    oneStation: PropTypes.arrayOf(PropTypes.object),
   };
 
   static defaultProps = {
     loading: false,
   };
+
 
   componentDidMount() {
     const {navigation} = this.props;
@@ -38,38 +40,32 @@ class ShowScreen extends Component {
     this.props.fetchByStationId(stationId);
   }
 
-  sensorId() {
-    this.props.stations.map(station => {
-      return this.props.fetchBySensorId(station.id);
-    })
-  };
+  componentWillUnmount(){
+    this.props.reset();
+  }
 
   renderCard() {
     return (
         <Card title="VALUES" containerStyle={containerStyle}>
           {
-            this.props.sensors.map(u=> (
-                <View key={Math.random()}>
-                  <Text>{u.key}</Text>
-                </View>
-              ))
-              }
-          })
+            <View key={Math.random()}>
+              <Text>works</Text>
+            </View>
+          }
         </Card>
     );
   }
 
   render() {
 
-    const {loading, stations } = this.props;
+    const {loading, oneStation} = this.props;
 
     if (loading) {
       return <Spinner size="large"/>;
     }
     return (
         <View style={{flex: 1}}>
-         {/* {stations && !loading && this.renderCard()}*/}
-          {stations && this.sensorId() && !loading && this.renderCard()}
+          {oneStation && this.renderCard()}
         </View>
     );
   }
@@ -77,8 +73,7 @@ class ShowScreen extends Component {
 
 const mapStateToProps = state => ({
   allStation: state.allReducer.allStation,
-  stations: state.stationReducer.stations,
-  loading: state.stationReducer.loading,
+  oneStation: state.stationReducer.oneStation,
   sensors: state.stationReducer.sensors,
 
 });
@@ -87,5 +82,5 @@ const containerStyle = {
   marginTop: 20,
 };
 
-export default connect(mapStateToProps,
-    {fetchByStationId, fetchBySensorId})(ShowScreen);
+export default connect(mapStateToProps, {fetchByStationId, reset})(
+    ShowScreen);

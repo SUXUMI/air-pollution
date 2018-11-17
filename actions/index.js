@@ -4,7 +4,7 @@ import {
   FETCH_BY_STATION_ID,
   LOADING_LIST,
   ADD_VALUE_FOR_SENSORS,
-  FETCH_BY_INDEX,
+  FETCH_BY_INDEX, LOADING_ERROR, RESET,
 } from './types';
 
 const BASE_URL = 'http://api.gios.gov.pl/pjp-api/rest/station/';
@@ -40,6 +40,9 @@ export function fetchByStationId(id) {
     dispatch(loading(true));
     request.then((response) => {
       dispatch(loading(false));
+      response.data.map(station => {
+        return dispatch(fetchBySensorId(station.id));
+      });
       return dispatch({
         type: FETCH_BY_STATION_ID,
         payload: response,
@@ -79,4 +82,8 @@ export function getIndex(id) {
       });
     }).catch(e => console.log(e));// eslint-disable-line no-console
   };
+}
+
+export function reset() {
+  return {type: RESET};
 }

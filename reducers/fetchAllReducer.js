@@ -6,7 +6,6 @@ import {
 
 const INITIAL_STATE = {
   error: '',
-  loading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -19,10 +18,10 @@ export default (state = INITIAL_STATE, action) => {
       };
     }
     case LOADING_ERROR:
-      return {...state, error: 'Something went wrong', loading: true};
+      return {...state, error: 'Something went wrong'};
 
-    case RESET:
-      return {};
+   /* case RESET:
+      return {};*/
 
     default:
       return state;
