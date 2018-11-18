@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Card, Button, ListItem } from 'react-native-elements';
+import { Button } from 'react-native-elements';
+import { Row, Rows, Table } from 'react-native-table-component';
 import {
   fetchByStationId,
   reset,
 } from '../actions';
 import { Spinner } from '../components/Spinner';
-import { RESET } from '../actions/types';
 
 class ShowScreen extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -33,39 +33,53 @@ class ShowScreen extends Component {
     loading: false,
   };
 
-
   componentDidMount() {
     const {navigation} = this.props;
     const stationId = navigation.getParam('stationId');
     this.props.fetchByStationId(stationId);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.props.reset();
   }
 
-  renderCard() {
+  renderTable() {
+
+    const dataObject = this.props.sensors;
+
+    const ArrayFromObject = Object.entries(dataObject);
+    const data = ArrayFromObject.map(String);
+
+    console.log(ArrayFromObject);
+
+    const tableData = [
+      ["1", "2"]];
+
+    const tableHead = ['param', 'value'];
+
+    const {container, head, text, border} = styles;
     return (
-        <Card title="VALUES" containerStyle={containerStyle}>
-          {
-            <View key={Math.random()}>
-              <Text>works</Text>
-            </View>
-          }
-        </Card>
+        <View style={container}>
+          <Table borderStyle={border}>
+            <Row data={tableHead} style={head}
+                 textStyle={text}/>
+            <Rows data={tableData} textStyle={text}/>
+          </Table>
+        </View>
     );
-  }
+  };
 
   render() {
 
-    const {loading, oneStation} = this.props;
+    const {sensors,loading} = this.props;
 
     if (loading) {
       return <Spinner size="large"/>;
     }
     return (
         <View style={{flex: 1}}>
-          {oneStation && this.renderCard()}
+          {!sensors && loading}
+          {sensors && this.renderTable()}
         </View>
     );
   }
@@ -78,9 +92,12 @@ const mapStateToProps = state => ({
 
 });
 
-const containerStyle = {
-  marginTop: 20,
-};
+const styles = ({
+  container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
+  head: {height: 40, backgroundColor: '#f1f8ff'},
+  text: {margin: 6},
+  border: {borderWidth: 2, borderColor: '#c8e1ff'},
+});
 
 export default connect(mapStateToProps, {fetchByStationId, reset})(
     ShowScreen);

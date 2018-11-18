@@ -15,15 +15,17 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, oneStation: action.payload.data};
     }
     case ADD_VALUE_FOR_SENSORS: {
+      const sensorValue = (action.payload.data.values.length>=0 &&
+          action.payload.data.values[0].value!= null)? action.payload.data.values[0].value: 0;
       return {
-        ...state, sensors: {...state.sensors, [action.payload.data.key]: action.payload.data.values[1].value }
+        ...state, sensors: {...state.sensors, [action.payload.data.key]: sensorValue}
       }
     }
     case LOADING_ERROR:
       return {...state, error: 'Something went wrong'};
 
     case RESET:
-      return {...state, sensors: {}};
+      return {...state, sensors: {} };
 
     default:
       return state;

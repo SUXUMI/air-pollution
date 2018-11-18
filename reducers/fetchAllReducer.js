@@ -14,14 +14,10 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         allStation: action.payload.data,
-        loading: false,
       };
     }
     case LOADING_ERROR:
       return {...state, error: 'Something went wrong'};
-
-   /* case RESET:
-      return {};*/
 
     default:
       return state;
