@@ -4,4 +4,4 @@ export const LOADING_LIST = 'loading_list';
 export const ADD_VALUE_FOR_SENSORS = 'add_value_for_sensors';
 export const LOADING_ERROR = 'loading_error';
 export const RESET = 'reset';
-export const FETCH_BY_INDEX= 'fetch_by_index';
+export const FETCH_BY_INDEX = 'fetch_by_index';

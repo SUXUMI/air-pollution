@@ -57,9 +57,7 @@ export function fetchByStationId(id) {
     dispatch(loading(true));
     request.then((response) => {
       dispatch(loading(false));
-      response.data.map(station => {
-        return dispatch(fetchBySensorId(station.id));
-      });
+      response.data.map(station => dispatch(fetchBySensorId(station.id)));
       return dispatch({
         type: FETCH_BY_STATION_ID,
         payload: response,
@@ -85,5 +83,5 @@ export function getIndex(id) {
 }
 
 export function reset() {
-  return {type: RESET};
+  return { type: RESET };
 }

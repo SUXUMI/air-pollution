@@ -4,7 +4,7 @@ import stationReducer from './fetchByStationReducer';
 
 const rootReducer = combineReducers({
   allReducer,
-  stationReducer
+  stationReducer,
 });
 
 export default rootReducer;

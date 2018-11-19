@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { ListItem } from 'react-native-elements';
 
 import { Spinner } from '../components/Spinner';
-import { fetchAll} from '../actions';
+import { fetchAll } from '../actions';
 
 class MapScreen extends Component {
   static propTypes = {
@@ -20,6 +20,7 @@ class MapScreen extends Component {
 
   static defaultProps = {
     loading: false,
+    allStation:[],
   };
 
   componentDidMount() {
@@ -63,7 +64,7 @@ class MapScreen extends Component {
 const mapStateToProps = state => (
   {
     allStation: state.allReducer.allStation,
-    loading: state.allReducer.loading
+    loading: state.allReducer.loading,
   }
 );
 
