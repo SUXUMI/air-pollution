@@ -6,9 +6,17 @@ import {
   ADD_VALUE_FOR_SENSORS,
   FETCH_BY_INDEX,
   RESET,
+  LOADING_ERROR,
 } from './types';
 
 const BASE_URL = 'http://api.gios.gov.pl/pjp-api/rest/station/';
+
+export function loadingList(bool) {
+  return {
+    type: LOADING_LIST,
+    loading: bool,
+  };
+}
 
 export function loading(bool) {
   return {
@@ -17,19 +25,26 @@ export function loading(bool) {
   };
 }
 
+export function loadingError(bool) {
+  return {
+    type: LOADING_ERROR,
+    hasError: bool,
+  };
+}
+
 export function fetchAll() {
   const URL = `${BASE_URL}findAll`;
   const request = axios.get(URL);
 
   return (dispatch) => {
-    dispatch(loading(true));
+    dispatch(loadingList(true));
     request.then((response) => {
-      dispatch(loading(false));
+      dispatch(loadingList(false));
       return dispatch({
         type: FETCH_ALL_DATA,
         payload: response,
       });
-    }).catch(e => console.log(e));// eslint-disable-line no-console
+    }).catch(() => dispatch(loadingError(true)));
   };
 }
 
@@ -45,7 +60,7 @@ export function fetchBySensorId(id) {
         type: ADD_VALUE_FOR_SENSORS,
         payload: response,
       });
-    }).catch(e => console.log(e));// eslint-disable-line no-console
+    }).catch(() => dispatch(loadingError(true)));
   };
 }
 
@@ -62,7 +77,7 @@ export function fetchByStationId(id) {
         type: FETCH_BY_STATION_ID,
         payload: response,
       });
-    }).catch(e => console.log(e));// eslint-disable-line no-console
+    }).catch(() => dispatch(loadingError(true)));
   };
 }
 
@@ -78,7 +93,7 @@ export function getIndex(id) {
         type: FETCH_BY_INDEX,
         payload: response,
       });
-    }).catch(e => console.log(e));// eslint-disable-line no-console
+    }).catch(() => dispatch(loadingError(true)));
   };
 }
 

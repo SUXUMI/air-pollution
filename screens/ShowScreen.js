@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
@@ -8,7 +8,7 @@ import {
   fetchByStationId,
   reset,
 } from '../actions';
-import { Spinner } from '../components/Spinner';
+import { renderLoading, hasError } from '../utils/functions';
 
 class ShowScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -60,7 +60,7 @@ class ShowScreen extends Component {
     const checking = allStation.filter((station) => {
       if (station.id === oneStation[0].stationId) {
         return station;
-      }
+      } return null;
     });
 
     const cityName = Object.assign({}, ...checking).stationName;
@@ -85,13 +85,11 @@ Station:
   render() {
     const { sensors, loading } = this.props;
 
-    if (loading) {
-      return <Spinner size="large" />;
-    }
     return (
       <View style={{ flex: 1 }}>
-        {!sensors && loading}
-        {sensors && this.renderTable()}
+        {loading && renderLoading()}
+        {hasError && hasError()}
+        {sensors && !loading && !hasError && this.renderTable()}
       </View>
     );
   }
@@ -101,6 +99,8 @@ const mapStateToProps = state => ({
   allStation: state.allReducer.allStation,
   oneStation: state.stationReducer.oneStation,
   sensors: state.stationReducer.sensors,
+  loading: state.stationReducer.loading,
+  hasError: state.stationReducer.hasError,
 
 });
 

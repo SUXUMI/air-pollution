@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ListItem } from 'react-native-elements';
 
-import { Spinner } from '../components/Spinner';
+import {renderLoading, hasError} from '../utils/functions'
 import { fetchAll } from '../actions';
 
 class MapScreen extends Component {
@@ -20,7 +20,7 @@ class MapScreen extends Component {
 
   static defaultProps = {
     loading: false,
-    allStation:[],
+    allStation: [],
   };
 
   componentDidMount() {
@@ -45,17 +45,14 @@ class MapScreen extends Component {
       </View>
     );
   }
-
   render() {
-    const { loading, allStation } = this.props;
-
-    if (loading) {
-      return <Spinner size="large" />;
-    }
+    const { allStation, loadingList, hasError } = this.props;
 
     return (
       <ScrollView style={{ flex: 1 }}>
-        {allStation && !loading && this.renderStation()}
+        {loadingList && renderLoading()}
+        {hasError && hasError()}
+        {allStation && !loadingList && !hasError && this.renderStation()}
       </ScrollView>
     );
   }
@@ -64,7 +61,8 @@ class MapScreen extends Component {
 const mapStateToProps = state => (
   {
     allStation: state.allReducer.allStation,
-    loading: state.allReducer.loading,
+    loadingList: state.allReducer.loadingList,
+    hasError: state.allReducer.hasError,
   }
 );
 
