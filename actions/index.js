@@ -60,7 +60,7 @@ export function fetchBySensorId(id) {
         type: ADD_VALUE_FOR_SENSORS,
         payload: response,
       });
-    }).catch(() => dispatch(loadingError(true)));
+    });
   };
 }
 

@@ -7,20 +7,22 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ListItem } from 'react-native-elements';
 
-import {renderLoading, hasError} from '../utils/functions'
+import { renderLoading, hasErrorFunction } from '../utils/functions';
 import { fetchAll } from '../actions';
 
 class MapScreen extends Component {
   static propTypes = {
     fetchAll: PropTypes.func.isRequired,
-    loading: PropTypes.bool,
+    loadingList: PropTypes.bool,
     allStation: PropTypes.arrayOf(PropTypes.object),
     navigation: PropTypes.object.isRequired,
+    hasError: PropTypes.bool,
   };
 
   static defaultProps = {
-    loading: false,
+    loadingList: false,
     allStation: [],
+    hasError: false,
   };
 
   componentDidMount() {
@@ -45,13 +47,14 @@ class MapScreen extends Component {
       </View>
     );
   }
+
   render() {
     const { allStation, loadingList, hasError } = this.props;
 
     return (
       <ScrollView style={{ flex: 1 }}>
         {loadingList && renderLoading()}
-        {hasError && hasError()}
+        {hasError && hasErrorFunction()}
         {allStation && !loadingList && !hasError && this.renderStation()}
       </ScrollView>
     );

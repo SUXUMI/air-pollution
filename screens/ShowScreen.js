@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
@@ -8,7 +8,7 @@ import {
   fetchByStationId,
   reset,
 } from '../actions';
-import { renderLoading, hasError } from '../utils/functions';
+import { renderLoading, hasErrorFunction } from '../utils/functions';
 
 class ShowScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -30,6 +30,7 @@ class ShowScreen extends Component {
     reset: PropTypes.func.isRequired,
     sensors: PropTypes.object,
     allStation: PropTypes.arrayOf(PropTypes.object),
+    hasError: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -37,6 +38,7 @@ class ShowScreen extends Component {
     oneStation: [],
     allStation: [],
     sensors: {},
+    hasError: false,
   };
 
   componentDidMount() {
@@ -50,20 +52,21 @@ class ShowScreen extends Component {
   }
 
   renderTable() {
-    const { sensors, allStation, oneStation } = this.props;
-    const { container, textComp, head, text, border } = styles;
-
     const tableHead = ['parameter', 'value'];
+    const { sensors, allStation, oneStation } = this.props;
     const dataObject = sensors;
     const result = Object.keys(dataObject).map(key => [key, dataObject[key].toFixed(2).toString()]);
 
     const checking = allStation.filter((station) => {
-      if (station.id === oneStation[0].stationId) {
+      if ((oneStation[0] !== undefined && oneStation[0].stationId !== undefined) && (oneStation[0].stationId === station.id)) {
         return station;
-      } return null;
+      }
+      return null;
     });
 
     const cityName = Object.assign({}, ...checking).stationName;
+    const { container, textComp, head, text, border } = styles;
+
     return (
       <View style={container}>
         <Text style={textComp}>
@@ -83,13 +86,14 @@ Station:
   }
 
   render() {
-    const { sensors, loading } = this.props;
+    const { oneStation, loading, hasError, sensors } = this.props;
 
     return (
       <View style={{ flex: 1 }}>
         {loading && renderLoading()}
-        {hasError && hasError()}
-        {sensors && !loading && !hasError && this.renderTable()}
+        {hasError && hasErrorFunction()}
+        {oneStation && sensors && !loading && !hasError && this.renderTable()}
+        <Text>Dupa</Text>
       </View>
     );
   }
