@@ -2,7 +2,7 @@ import {
   FETCH_BY_STATION_ID,
   LOADING_ERROR,
   RESET,
-  ADD_VALUE_FOR_SENSORS,
+  ADD_VALUE_FOR_SENSORS, LOADING,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -29,6 +29,8 @@ export default (state = INITIAL_STATE, action) => {
     }
     case LOADING_ERROR:
       return { ...state, hasError: true };
+    case LOADING:
+      return { ...state, loading: true };
     case RESET:
       return { ...state, ...INITIAL_STATE };
     default:

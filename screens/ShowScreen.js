@@ -54,15 +54,15 @@ class ShowScreen extends Component {
     const { sensors, navigation } = this.props;
     const cityName = navigation.getParam('cityName');
     const dataObject = sensors;
-    const result = Object.keys(dataObject).map(key => [key, dataObject[key].toFixed(2).toString()]);
+    const result = Object.keys(dataObject)
+      .map(key => [key, dataObject[key].toFixed(2).toString()]);
     const { container, textComp, head, text, border } = styles;
 
     return (
       <View style={container}>
-        <Text style={textComp}>
-Station:
-          {cityName}
-        </Text>
+        <Text style={textComp}>Station:</Text>
+        <Text style={textComp}>{ cityName}</Text>
+
         <Table borderStyle={border}>
           <Row
             data={tableHead}
@@ -97,7 +97,12 @@ const mapStateToProps = state => ({
 });
 
 const styles = ({
-  textComp: { paddingBottom: 20, fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
+  textComp: {
+    paddingBottom: 20,
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
   head: { height: 40, backgroundColor: '#ABDCD7' },
   text: { margin: 6, textAlign: 'center' },

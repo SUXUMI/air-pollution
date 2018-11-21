@@ -6,6 +6,7 @@ import {
   ADD_VALUE_FOR_SENSORS,
   FETCH_BY_INDEX,
   RESET,
+  LOADING,
   LOADING_ERROR,
 } from './types';
 
@@ -20,7 +21,7 @@ export function loadingList(bool) {
 
 export function loading(bool) {
   return {
-    type: LOADING_LIST,
+    type: LOADING,
     loading: bool,
   };
 }

@@ -1,6 +1,7 @@
 import {
   FETCH_ALL_DATA,
   LOADING_ERROR,
+  LOADING_LIST,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -20,6 +21,8 @@ export default (state = INITIAL_STATE, action) => {
     }
     case LOADING_ERROR:
       return { ...state, hasError: true };
+    case LOADING_LIST:
+      return { ...state, loadingList: true };
     default:
       return state;
   }

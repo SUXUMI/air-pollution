@@ -4,7 +4,7 @@ import { Spinner } from '../components/Spinner';
 
 export function renderLoading() {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, justifyContent: 'center' }}>
       <Spinner size="large" />
 ;
     </View>
