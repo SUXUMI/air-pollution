@@ -29,14 +29,12 @@ class ShowScreen extends Component {
     oneStation: PropTypes.arrayOf(PropTypes.object),
     reset: PropTypes.func.isRequired,
     sensors: PropTypes.object,
-    allStation: PropTypes.arrayOf(PropTypes.object),
     hasError: PropTypes.bool,
   };
 
   static defaultProps = {
     loading: false,
     oneStation: [],
-    allStation: [],
     sensors: {},
     hasError: false,
   };
@@ -53,18 +51,10 @@ class ShowScreen extends Component {
 
   renderTable() {
     const tableHead = ['parameter', 'value'];
-    const { sensors, allStation, oneStation } = this.props;
+    const { sensors, navigation } = this.props;
+    const cityName = navigation.getParam('cityName');
     const dataObject = sensors;
     const result = Object.keys(dataObject).map(key => [key, dataObject[key].toFixed(2).toString()]);
-
-    const checking = allStation.filter((station) => {
-      if ((oneStation[0] !== undefined && oneStation[0].stationId !== undefined) && (oneStation[0].stationId === station.id)) {
-        return station;
-      }
-      return null;
-    });
-
-    const cityName = Object.assign({}, ...checking).stationName;
     const { container, textComp, head, text, border } = styles;
 
     return (
@@ -93,14 +83,12 @@ Station:
         {loading && renderLoading()}
         {hasError && hasErrorFunction()}
         {oneStation && sensors && !loading && !hasError && this.renderTable()}
-        <Text>Dupa</Text>
       </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  allStation: state.allReducer.allStation,
   oneStation: state.stationReducer.oneStation,
   sensors: state.stationReducer.sensors,
   loading: state.stationReducer.loading,

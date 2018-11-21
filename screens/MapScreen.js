@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { ListItem } from 'react-native-elements';
 
 import { renderLoading, hasErrorFunction } from '../utils/functions';
-import { fetchAll } from '../actions';
+import { fetchAll, reset } from '../actions';
 
 class MapScreen extends Component {
   static propTypes = {
@@ -39,7 +39,7 @@ class MapScreen extends Component {
                 key={city.id}
                 title={city.stationName}
                 onPressRightIcon={() => {
-                  navigation.navigate('show', { stationId: city.id });
+                  navigation.navigate('show', { stationId: city.id, cityName: city.stationName });
                 }}
               />
             ))
@@ -69,4 +69,4 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, { fetchAll })(MapScreen);
+export default connect(mapStateToProps, { fetchAll, reset })(MapScreen);

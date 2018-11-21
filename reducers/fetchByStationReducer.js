@@ -2,7 +2,6 @@ import {
   FETCH_BY_STATION_ID,
   LOADING_ERROR,
   RESET,
-  LOADING,
   ADD_VALUE_FOR_SENSORS,
 } from '../actions/types';
 
@@ -19,20 +18,19 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, oneStation: action.payload.data, loading: false };
     }
     case ADD_VALUE_FOR_SENSORS: {
-      const sensorValue = (action.payload.data.values.length >= 0
-          && action.payload.data.values[0].value != null) ? action.payload.data.values[0].value : 0;
+      const payloadData = action.payload.data;
+      const sensorValue = (payloadData.values.length >= 0 && payloadData.values[0] !== undefined
+          && payloadData.values[0].value != null) ? payloadData.values[0].value : 0;
       return {
         ...state,
-        sensors: { ...state.sensors, [action.payload.data.key]: sensorValue },
+        sensors: { ...state.sensors, [payloadData.key]: sensorValue },
         loading: false,
       };
     }
-    case LOADING:
-      return { ...state, loading: true };
     case LOADING_ERROR:
       return { ...state, hasError: true };
     case RESET:
-      return { ...state, sensors: {} };
+      return { ...state, ...INITIAL_STATE };
     default:
       return state;
   }
