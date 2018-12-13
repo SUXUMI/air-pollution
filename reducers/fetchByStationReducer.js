@@ -20,7 +20,9 @@ export default (state = INITIAL_STATE, action) => {
     case ADD_VALUE_FOR_SENSORS: {
       const payloadData = action.payload.data;
       const sensorValue = (payloadData.values.length >= 0 && payloadData.values[0] !== undefined
-          && payloadData.values[0].value != null) ? payloadData.values[0].value : 0;
+          && payloadData.values[0].value != null)
+        ? payloadData.values[0].value
+        : (payloadData.values[1].value || 0);
       return {
         ...state,
         sensors: { ...state.sensors, [payloadData.key]: sensorValue },

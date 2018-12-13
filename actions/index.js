@@ -10,7 +10,7 @@ import {
   LOADING_ERROR,
 } from './types';
 
-const BASE_URL = 'http://api.gios.gov.pl/pjp-api/rest/station/';
+const BASE_URL = 'http://api.gios.gov.pl/pjp-api/rest';
 
 export function loadingList(bool) {
   return {
@@ -34,7 +34,7 @@ export function loadingError(bool) {
 }
 
 export function fetchAll() {
-  const URL = `${BASE_URL}findAll`;
+  const URL = `${BASE_URL}/station/findAll`;
   const request = axios.get(URL);
 
   return (dispatch) => {
@@ -50,7 +50,7 @@ export function fetchAll() {
 }
 
 export function fetchBySensorId(id) {
-  const URL = `http://api.gios.gov.pl/pjp-api/rest/data/getData/${id}`;
+  const URL = `${BASE_URL}/data/getData/${id}`;
   const request = axios.get(URL);
 
   return (dispatch) => {
@@ -66,7 +66,7 @@ export function fetchBySensorId(id) {
 }
 
 export function fetchByStationId(id) {
-  const URL = `${BASE_URL}sensors/${id}`;
+  const URL = `${BASE_URL}/station/sensors/${id}`;
   const request = axios.get(URL);
 
   return (dispatch) => {
@@ -83,7 +83,7 @@ export function fetchByStationId(id) {
 }
 
 export function getIndex(id) {
-  const URL = `http://api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/${id}`;
+  const URL = `${BASE_URL}/aqindex/getIndex/${id}`;
   const request = axios.get(URL);
 
   return (dispatch) => {

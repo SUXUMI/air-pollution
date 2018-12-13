@@ -25,10 +25,10 @@ class MapScreen extends Component {
   state = {
     mapLoaded: false,
     region: {
-      latitude: 52.285073,
-      longitude: 19.933018,
-      latitudeDelta: 9.22,
-      longitudeDelta: 4.21,
+      latitude: 52.28,
+      longitude: 19.00,
+      latitudeDelta: 12.0,
+      longitudeDelta: 4.0,
     },
   };
 

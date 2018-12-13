@@ -9,6 +9,7 @@ import {
   reset,
 } from '../actions';
 import { renderLoading, hasErrorFunction } from '../utils/functions';
+import { norms } from '../utils/norms';
 
 class ShowScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -56,21 +57,25 @@ class ShowScreen extends Component {
     const dataObject = sensors;
     const result = Object.keys(dataObject)
       .map(key => [key, dataObject[key].toFixed(2).toString()]);
-    const { container, textComp, head, text, border } = styles;
+    const { container, textComp, head, text, border, legend } = styles;
 
     return (
       <View style={container}>
         <Text style={textComp}>Station:</Text>
-        <Text style={textComp}>{ cityName}</Text>
-
+        <Text style={textComp}>{cityName}</Text>
         <Table borderStyle={border}>
-          <Row
-            data={tableHead}
-            style={head}
-            textStyle={text}
-          />
+          <Row data={tableHead} style={head} textStyle={text} />
           <Rows data={result} textStyle={text} />
         </Table>
+        <Text style={[legend, { paddingTop: 15 }]}>Legend:</Text>
+        <Text style={legend}>
+          <Text style={{ color: 'orange' }}>100</Text>
+            - limit values exceeded
+        </Text>
+        <Text style={legend}>
+          <Text style={{ color: 'red' }}>100</Text>
+            - alarm values exceeded
+        </Text>
       </View>
     );
   }
@@ -106,6 +111,7 @@ const styles = ({
   container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
   head: { height: 40, backgroundColor: '#ABDCD7' },
   text: { margin: 6, textAlign: 'center' },
+  legend: { marginTop: 10, fontWeight: 'bold' },
   border: { borderWidth: 1, borderColor: '#009688' },
 });
 
