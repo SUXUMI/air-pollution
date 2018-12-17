@@ -4,7 +4,6 @@ import {
   FETCH_BY_STATION_ID,
   LOADING_LIST,
   ADD_VALUE_FOR_SENSORS,
-  FETCH_BY_INDEX,
   RESET,
   LOADING,
   LOADING_ERROR,
@@ -31,6 +30,10 @@ export function loadingError(bool) {
     type: LOADING_ERROR,
     hasError: bool,
   };
+}
+
+export function reset() {
+  return { type: RESET };
 }
 
 export function fetchAll() {
@@ -82,22 +85,3 @@ export function fetchByStationId(id) {
   };
 }
 
-export function getIndex(id) {
-  const URL = `${BASE_URL}/aqindex/getIndex/${id}`;
-  const request = axios.get(URL);
-
-  return (dispatch) => {
-    dispatch(loading(true));
-    request.then((response) => {
-      dispatch(loading(false));
-      return dispatch({
-        type: FETCH_BY_INDEX,
-        payload: response,
-      });
-    }).catch(() => dispatch(loadingError(true)));
-  };
-}
-
-export function reset() {
-  return { type: RESET };
-}

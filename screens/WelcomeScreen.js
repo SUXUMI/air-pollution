@@ -52,10 +52,7 @@ const styles = {
     color: 'white',
     margin: 20,
   },
-  fadeInStyle: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT / 4,
-  },
+  fadeInStyle: { width: SCREEN_WIDTH, height: SCREEN_HEIGHT / 4 },
 };
 
 export default WelcomeScreen;

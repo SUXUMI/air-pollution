@@ -8,18 +8,23 @@ import {
   fetchByStationId,
   reset,
 } from '../actions';
-import { renderLoading, hasErrorFunction } from '../utils/functions';
+import {
+  renderLoading,
+  hasErrorFunction,
+  changeColor,
+  changeArray,
+} from '../utils/functions';
 import { norms } from '../utils/norms';
 
 class ShowScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({navigation}) => ({
     title: 'Values',
     headerLeft: (<Button
-      title="< Back"
-      onPress={() => navigation.navigate('map')}
-      backgroundColor="rgba(0,0,0,0)"
-      color="#009688"
-    />
+            title="< Back"
+            onPress={() => navigation.navigate('map')}
+            backgroundColor="rgba(0,0,0,0)"
+            color="#009688"
+        />
     ),
   });
 
@@ -41,7 +46,7 @@ class ShowScreen extends Component {
   };
 
   componentDidMount() {
-    const { navigation } = this.props;
+    const {navigation} = this.props;
     const stationId = navigation.getParam('stationId');
     this.props.fetchByStationId(stationId); // eslint-disable-line react/destructuring-assignment
   }
@@ -51,44 +56,48 @@ class ShowScreen extends Component {
   }
 
   renderTable() {
-    const tableHead = ['parameter', 'value'];
-    const { sensors, navigation } = this.props;
+    const {sensors, navigation} = this.props;
     const cityName = navigation.getParam('cityName');
-    const dataObject = sensors;
-    const result = Object.keys(dataObject)
-      .map(key => [key, dataObject[key].toFixed(2).toString()]);
-    const { container, textComp, head, text, border, legend } = styles;
+    const tableHead = ['parameter', 'value'];
+    const result = Object.keys(sensors).
+        map(key => [key, sensors[key].toFixed(2).toString()]);
+    const limits = changeColor(norms, sensors);
+    const colors = Object.keys(limits).map(key => limits[key]);
+    const resultWithColor = changeArray(result, colors);
+    console.log(resultWithColor);
 
-    return (
-      <View style={container}>
-        <Text style={textComp}>Station:</Text>
-        <Text style={textComp}>{cityName}</Text>
-        <Table borderStyle={border}>
-          <Row data={tableHead} style={head} textStyle={text} />
-          <Rows data={result} textStyle={text} />
-        </Table>
-        <Text style={[legend, { paddingTop: 15 }]}>Legend:</Text>
-        <Text style={legend}>
-          <Text style={{ color: 'orange' }}>100</Text>
-            - limit values exceeded
-        </Text>
-        <Text style={legend}>
-          <Text style={{ color: 'red' }}>100</Text>
-            - alarm values exceeded
-        </Text>
-      </View>
-    );
-  }
+    const {container, textComp, head, text, border, legend} = styles;
+
+      return (
+        <View style={container}>
+          <Text style={textComp}>Station:</Text>
+          <Text style={textComp}>{cityName}</Text>
+          <Table borderStyle={border}>
+            <Row data={tableHead} style={head} textStyle={text} />
+            <Rows data={result} textStyle={text} />
+          </Table>
+          <Text style={[legend, { paddingTop: 15 }]}>Legend:</Text>
+          <Text style={legend}>
+            <Text style={{ color: 'orange' }}>100</Text>
+              - limit values exceeded
+          </Text>
+          <Text style={legend}>
+            <Text style={{ color: 'red' }}>100</Text>
+              - alarm values exceeded
+          </Text>
+        </View>
+      );
+    }
 
   render() {
-    const { oneStation, loading, hasError, sensors } = this.props;
+    const {oneStation, loading, hasError, sensors} = this.props;
 
     return (
-      <View style={{ flex: 1 }}>
-        {loading && renderLoading()}
-        {hasError && hasErrorFunction()}
-        {oneStation && sensors && !loading && !hasError && this.renderTable()}
-      </View>
+        <View style={{flex: 1}}>
+          {loading && renderLoading()}
+          {hasError && hasErrorFunction()}
+          {oneStation && sensors && !loading && !hasError && this.renderTable()}
+        </View>
     );
   }
 }
@@ -108,11 +117,11 @@ const styles = ({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  head: { height: 40, backgroundColor: '#ABDCD7' },
-  text: { margin: 6, textAlign: 'center' },
-  legend: { marginTop: 10, fontWeight: 'bold' },
-  border: { borderWidth: 1, borderColor: '#009688' },
+  container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
+  head: {height: 40, backgroundColor: '#ABDCD7'},
+  text: {margin: 6, textAlign: 'center'},
+  legend: {marginTop: 10, fontWeight: 'bold'},
+  border: {borderWidth: 1, borderColor: '#009688'},
 });
 
-export default connect(mapStateToProps, { fetchByStationId, reset })(ShowScreen);
+export default connect(mapStateToProps, {fetchByStationId, reset})(ShowScreen);

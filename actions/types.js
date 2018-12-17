@@ -5,5 +5,3 @@ export const LOADING = 'loading';
 export const ADD_VALUE_FOR_SENSORS = 'add_value_for_sensors';
 export const LOADING_ERROR = 'loading_error';
 export const RESET = 'reset';
-export const ERROR_RESET = 'error_reset';
-export const FETCH_BY_INDEX = 'fetch_by_index';
