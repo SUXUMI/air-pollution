@@ -7,7 +7,7 @@ import {
   createBottomTabNavigator,
   createStackNavigator,
 } from 'react-navigation';
-import {store} from './store';
+import { store } from './store';
 import { Provider } from 'react-redux';
 
 

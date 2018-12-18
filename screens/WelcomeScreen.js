@@ -24,7 +24,7 @@ class WelcomeScreen extends Component {
       <View style={container}>
         <FadeInView style={fadeInStyle}>
           <Text style={textStyle}>
-              Welcome to polish air pollution App based on gios.gov.pl stations
+              Welcome to Polish Air Pollution App based on gios.gov.pl data
           </Text>
         </FadeInView>
         <Button

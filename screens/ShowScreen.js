@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
-import { Row, Rows, Table } from 'react-native-table-component';
+import { Row, Table, TableWrapper, Cell } from 'react-native-table-component';
 import {
   fetchByStationId,
   reset,
@@ -17,14 +17,14 @@ import {
 import { norms } from '../utils/norms';
 
 class ShowScreen extends Component {
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions = ({ navigation }) => ({
     title: 'Values',
     headerLeft: (<Button
-            title="< Back"
-            onPress={() => navigation.navigate('map')}
-            backgroundColor="rgba(0,0,0,0)"
-            color="#009688"
-        />
+      title="< Back"
+      onPress={() => navigation.navigate('map')}
+      backgroundColor="rgba(0,0,0,0)"
+      color="#009688"
+    />
     ),
   });
 
@@ -46,7 +46,7 @@ class ShowScreen extends Component {
   };
 
   componentDidMount() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     const stationId = navigation.getParam('stationId');
     this.props.fetchByStationId(stationId); // eslint-disable-line react/destructuring-assignment
   }
@@ -56,48 +56,61 @@ class ShowScreen extends Component {
   }
 
   renderTable() {
-    const {sensors, navigation} = this.props;
+    const { sensors, navigation } = this.props;
     const cityName = navigation.getParam('cityName');
     const tableHead = ['parameter', 'value'];
-    const result = Object.keys(sensors).
-        map(key => [key, sensors[key].toFixed(2).toString()]);
+    const result = Object.keys(sensors)
+      .map(key => [key, sensors[key].toFixed(2).toString()]);
     const limits = changeColor(norms, sensors);
     const colors = Object.keys(limits).map(key => limits[key]);
     const resultWithColor = changeArray(result, colors);
-    console.log(resultWithColor);
 
-    const {container, textComp, head, text, border, legend} = styles;
-
-      return (
-        <View style={container}>
-          <Text style={textComp}>Station:</Text>
-          <Text style={textComp}>{cityName}</Text>
-          <Table borderStyle={border}>
-            <Row data={tableHead} style={head} textStyle={text} />
-            <Rows data={result} textStyle={text} />
-          </Table>
-          <Text style={[legend, { paddingTop: 15 }]}>Legend:</Text>
-          <Text style={legend}>
-            <Text style={{ color: 'orange' }}>100</Text>
-              - limit values exceeded
-          </Text>
-          <Text style={legend}>
-            <Text style={{ color: 'red' }}>100</Text>
-              - alarm values exceeded
-          </Text>
-        </View>
-      );
-    }
-
-  render() {
-    const {oneStation, loading, hasError, sensors} = this.props;
+    const { container, textComp, head, text, border, legend, row } = styles;
 
     return (
-        <View style={{flex: 1}}>
-          {loading && renderLoading()}
-          {hasError && hasErrorFunction()}
-          {oneStation && sensors && !loading && !hasError && this.renderTable()}
-        </View>
+      <View style={container}>
+        <Text style={textComp}>Station:</Text>
+        <Text style={textComp}>{cityName}</Text>
+        <Table borderStyle={border}>
+          <Row data={tableHead} style={head} textStyle={text} />
+          {
+              resultWithColor.map((rowData, index) => (
+                <TableWrapper key={index} style={row}>
+                  {
+                      rowData.map((cellData, cellIndex) => (
+                        <Cell
+                          key={cellIndex} data={cellIndex === 2 ? null : cellData}  // dokonczyc
+                          textStyle={[text, cellIndex === 1 && {color: cellData[cellIndex + 1]}]} // dokonczyc
+                        />
+                      ))
+                    }
+                </TableWrapper>
+              ))
+            }
+        </Table>
+        <Text style={[legend, { paddingTop: 15 }]}>Legend:</Text>
+        <Text style={legend}>
+          <Text style={{ color: 'orange' }}>Orange </Text>
+                      - limit values exceeded
+        </Text>
+        <Text style={legend}>
+          <Text style={{ color: 'red' }}>Red </Text>
+                      - alarm values exceeded
+        </Text>
+      </View>
+    );
+  }
+
+  render() {
+    const { oneStation, loading, hasError, sensors } = this.props;
+
+    return (
+      <View style={{ flex: 1 }}>
+        {loading && renderLoading()}
+        {hasError && hasErrorFunction()}
+        {oneStation && sensors && !loading && !hasError
+            && this.renderTable()}
+      </View>
     );
   }
 }
@@ -117,11 +130,12 @@ const styles = ({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
-  head: {height: 40, backgroundColor: '#ABDCD7'},
-  text: {margin: 6, textAlign: 'center'},
-  legend: {marginTop: 10, fontWeight: 'bold'},
-  border: {borderWidth: 1, borderColor: '#009688'},
+  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+  head: { height: 40, backgroundColor: '#ABDCD7' },
+  text: { margin: 6, textAlign: 'center', fontWeight: 'bold' },
+  legend: { marginTop: 10, fontWeight: 'bold' },
+  border: { borderWidth: 1, borderColor: '#009688' },
+  row: {flexDirection: 'row', height: 40 }
 });
 
-export default connect(mapStateToProps, {fetchByStationId, reset})(ShowScreen);
+export default connect(mapStateToProps, { fetchByStationId, reset })(ShowScreen);

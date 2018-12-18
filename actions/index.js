@@ -84,4 +84,3 @@ export function fetchByStationId(id) {
     }).catch(() => dispatch(loadingError(true)));
   };
 }
-
