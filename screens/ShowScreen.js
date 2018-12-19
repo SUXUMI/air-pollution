@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
-import { Row, Table, TableWrapper, Cell } from 'react-native-table-component';
+import { Row, Table, Cell, TableWrapper } from 'react-native-table-component';
 import {
   fetchByStationId,
   reset,
@@ -74,16 +74,17 @@ class ShowScreen extends Component {
         <Table borderStyle={border}>
           <Row data={tableHead} style={head} textStyle={text} />
           {
-              resultWithColor.map((rowData, index) => (
-                <TableWrapper key={index} style={row}>
+              resultWithColor.map(rowData => (
+                <TableWrapper key={Math.random()} style={row}>
                   {
-                      rowData.map((cellData, cellIndex) => (
+                      rowData.slice(0, -1).map((cellData, cellIndex) => (
                         <Cell
-                          key={cellIndex} data={cellIndex === 2 ? null : cellData}  // dokonczyc
-                          textStyle={[text, cellIndex === 1 && {color: cellData[cellIndex + 1]}]} // dokonczyc
+                          key={Math.random()}
+                          data={cellData}
+                          textStyle={[text, { color: cellIndex === 1 ? rowData[2] : 'black' }]}
                         />
                       ))
-                    }
+                        }
                 </TableWrapper>
               ))
             }
@@ -91,11 +92,11 @@ class ShowScreen extends Component {
         <Text style={[legend, { paddingTop: 15 }]}>Legend:</Text>
         <Text style={legend}>
           <Text style={{ color: 'orange' }}>Orange </Text>
-                      - limit values exceeded
+            - limit values exceeded
         </Text>
         <Text style={legend}>
           <Text style={{ color: 'red' }}>Red </Text>
-                      - alarm values exceeded
+            - alarm values exceeded
         </Text>
       </View>
     );
@@ -109,7 +110,7 @@ class ShowScreen extends Component {
         {loading && renderLoading()}
         {hasError && hasErrorFunction()}
         {oneStation && sensors && !loading && !hasError
-            && this.renderTable()}
+          && this.renderTable()}
       </View>
     );
   }
@@ -135,7 +136,7 @@ const styles = ({
   text: { margin: 6, textAlign: 'center', fontWeight: 'bold' },
   legend: { marginTop: 10, fontWeight: 'bold' },
   border: { borderWidth: 1, borderColor: '#009688' },
-  row: {flexDirection: 'row', height: 40 }
+  row: { flexDirection: 'row' },
 });
 
 export default connect(mapStateToProps, { fetchByStationId, reset })(ShowScreen);

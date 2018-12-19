@@ -18,12 +18,12 @@ class WelcomeScreen extends Component {
   };
 
   render() {
-    const { container, fadeInStyle, textStyle } = styles;
+    const { container, fadeIn, text } = styles;
 
     return (
       <View style={container}>
-        <FadeInView style={fadeInStyle}>
-          <Text style={textStyle}>
+        <FadeInView style={fadeIn}>
+          <Text style={text}>
               Welcome to Polish Air Pollution App based on gios.gov.pl data
           </Text>
         </FadeInView>
@@ -46,13 +46,13 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#009688',
   },
-  textStyle: {
+  text: {
     fontSize: 30,
     textAlign: 'center',
     color: 'white',
     margin: 20,
   },
-  fadeInStyle: { width: SCREEN_WIDTH, height: SCREEN_HEIGHT / 4 },
+  fadeIn: { width: SCREEN_WIDTH, height: SCREEN_HEIGHT / 4 },
 };
 
 export default WelcomeScreen;

@@ -34,7 +34,7 @@ export function changeColor(obj1, obj2) {
 
 export function changeArray(arr1, arr2) {
   const res = [];
-  for (let i = 0; i < arr1.length; i++) {
+  for (let i = 0; i < arr1.length; i += 1) {
     res.push(arr1[i].concat(arr2[i]));
   }
   return res;

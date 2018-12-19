@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import MapScreen from './screens/MapScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
-import ShowScreen from './screens/ShowScreen';
+import { Provider } from 'react-redux';
 import {
   createBottomTabNavigator,
   createStackNavigator,
 } from 'react-navigation';
+import MapScreen from './screens/MapScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
+import ShowScreen from './screens/ShowScreen';
 import { store } from './store';
-import { Provider } from 'react-redux';
-
 
 export default class App extends Component {
 
