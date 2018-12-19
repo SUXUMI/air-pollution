@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
 import { Spinner } from '../components/Spinner';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+
 
 export function renderLoading() {
   return (
-    <View style={styles.viewStyle}>
+    <View style={styles.view}>
       <Spinner size="large" />
     </View>
   );
@@ -12,8 +15,10 @@ export function renderLoading() {
 
 export function hasErrorFunction() {
   return (
-    <View style={styles.viewStyle}>
-      <Text>There is something wrong with API data, try again later!!</Text>
+    <View style={styles.view}>
+      <Text style={styles.text}> There is something wrong with API,
+        try again later!!
+      </Text>
     </View>
   );
 }
@@ -41,5 +46,6 @@ export function changeArray(arr1, arr2) {
 }
 
 const styles = ({
-  viewStyle: { flex: 1, justifyContent: 'center' },
+  view: { flex: 1, justifyContent: 'center', margin: 20},
+  text: { textAlign: 'center', fontSize: 20 },
 });

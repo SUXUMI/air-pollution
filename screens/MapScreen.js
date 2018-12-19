@@ -8,6 +8,10 @@ import { fetchAll, reset } from '../actions';
 import { renderLoading, hasErrorFunction } from '../utils/functions';
 
 class MapScreen extends Component {
+  static navigationOptions = () => ({
+    title: 'AIR POLUTION',
+  });
+
   static propTypes = {
     fetchAll: PropTypes.func.isRequired,
     allStation: PropTypes.arrayOf(PropTypes.object),

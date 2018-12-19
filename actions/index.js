@@ -9,7 +9,7 @@ import {
   LOADING_ERROR,
 } from './types';
 
-const BASE_URL = 'http://api.gios.gov.pl/pjp-api/rest';
+const BASE_URL = 'http://api.gios.gov.pl/pjp-api/rest/';
 
 export function loadingList(bool) {
   return {
