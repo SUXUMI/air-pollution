@@ -9,7 +9,7 @@ import { renderLoading, hasErrorFunction } from '../utils/functions';
 
 class MapScreen extends Component {
   static navigationOptions = () => ({
-    title: 'AIR POLUTION',
+    title: 'AIR POLLUTION',
   });
 
   static propTypes = {

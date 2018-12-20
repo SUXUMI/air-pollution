@@ -5,10 +5,10 @@ import {
   createBottomTabNavigator,
   createStackNavigator,
 } from 'react-navigation';
-import MapScreen from './screens/MapScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
-import ShowScreen from './screens/ShowScreen';
-import { store } from './store';
+import MapScreen from './src/screens/MapScreen';
+import WelcomeScreen from './src/screens/WelcomeScreen';
+import ShowScreen from './src/screens/ShowScreen';
+import { store } from './src/store';
 
 export default class App extends Component {
 

@@ -1,4 +1,4 @@
-import { changeArray } from '../utils/functions';
+import { changeArray } from '../src/utils/functions';
 
 describe('test changeArray functions', () => {
   test('Valid response', () => {
