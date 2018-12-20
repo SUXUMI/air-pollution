@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "test": "jest",
     "eject": "expo eject",
-    "lint": "eslint actions components reducers screens utils",
+    "lint": "eslint src",
     "lint-changes": "bash bin/yarn-lint-changes.sh"
   },
   "dependencies": {

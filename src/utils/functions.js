@@ -1,9 +1,6 @@
 import React from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text } from 'react-native';
 import { Spinner } from '../components/Spinner';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
 
 export function renderLoading() {
   return (
@@ -16,7 +13,9 @@ export function renderLoading() {
 export function hasErrorFunction() {
   return (
     <View style={styles.view}>
-      <Text style={styles.text}> There is something wrong with API,
+      <Text style={styles.text}>
+        {' '}
+There is something wrong with API,
         try again later!!
       </Text>
     </View>
@@ -46,6 +45,6 @@ export function changeArray(arr1, arr2) {
 }
 
 const styles = ({
-  view: { flex: 1, justifyContent: 'center', margin: 20},
+  view: { flex: 1, justifyContent: 'center', margin: 20 },
   text: { textAlign: 'center', fontSize: 20 },
 });
