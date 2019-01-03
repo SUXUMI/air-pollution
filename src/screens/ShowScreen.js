@@ -28,23 +28,6 @@ class ShowScreen extends Component {
     ),
   });
 
-  static propTypes = {
-    loading: PropTypes.bool,
-    navigation: PropTypes.object.isRequired,
-    fetchByStationId: PropTypes.func.isRequired,
-    oneStation: PropTypes.arrayOf(PropTypes.object),
-    reset: PropTypes.func.isRequired,
-    sensors: PropTypes.object,
-    hasError: PropTypes.bool,
-  };
-
-  static defaultProps = {
-    loading: false,
-    oneStation: [],
-    sensors: {},
-    hasError: false,
-  };
-
   componentDidMount() {
     const { navigation } = this.props;
     const stationId = navigation.getParam('stationId');
@@ -81,10 +64,15 @@ class ShowScreen extends Component {
                         <Cell
                           key={Math.random()}
                           data={cellData}
-                          textStyle={[text, { color: cellIndex === 1 ? rowData[2] : 'black' }]}
+                          textStyle={[text,
+                            {
+                              color: cellIndex === 1
+                                ? rowData[2]
+                                : 'black',
+                            }]}
                         />
                       ))
-                        }
+                    }
                 </TableWrapper>
               ))
             }
@@ -138,5 +126,22 @@ const styles = ({
   border: { borderWidth: 1, borderColor: '#009688' },
   row: { flexDirection: 'row' },
 });
+
+ShowScreen.propTypes = {
+  loading: PropTypes.bool,
+  navigation: PropTypes.object.isRequired,
+  fetchByStationId: PropTypes.func.isRequired,
+  oneStation: PropTypes.arrayOf(PropTypes.object),
+  reset: PropTypes.func.isRequired,
+  sensors: PropTypes.object,
+  hasError: PropTypes.bool,
+};
+
+ShowScreen.defaultProps = {
+  loading: false,
+  oneStation: [],
+  sensors: {},
+  hasError: false,
+};
 
 export default connect(mapStateToProps, { fetchByStationId, reset })(ShowScreen);

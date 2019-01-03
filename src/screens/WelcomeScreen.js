@@ -8,15 +8,6 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 class WelcomeScreen extends Component {
-  static propTypes ={
-    navigation: PropTypes.object.isRequired,
-    navigate: PropTypes.object,
-  };
-
-  static defaultProps ={
-    navigate: {},
-  };
-
   render() {
     const { container, fadeIn, text } = styles;
 
@@ -32,7 +23,7 @@ class WelcomeScreen extends Component {
           title="Tap me!"
           backgroundColor="#009688"
           iconRight={{ name: 'keyboard-backspace' }}
-          onPress={() => this.props.navigation.navigate('main')} // eslint-disable-line  react/destructuring-assignment
+          onPress={() => this.props.navigation.navigate('main')} // eslint-disable-line react/destructuring-assignment
         />
       </View>
     );
@@ -53,6 +44,15 @@ const styles = {
     margin: 20,
   },
   fadeIn: { width: SCREEN_WIDTH, height: SCREEN_HEIGHT / 4 },
+};
+
+WelcomeScreen.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  navigate: PropTypes.object,
+};
+
+WelcomeScreen.defaultProps = {
+  navigate: {},
 };
 
 export default WelcomeScreen;

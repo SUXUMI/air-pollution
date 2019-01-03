@@ -12,20 +12,6 @@ class MapScreen extends Component {
     title: 'AIR POLLUTION',
   });
 
-  static propTypes = {
-    fetchAll: PropTypes.func.isRequired,
-    allStation: PropTypes.arrayOf(PropTypes.object),
-    navigation: PropTypes.object.isRequired,
-    hasError: PropTypes.bool,
-    loadingList: PropTypes.bool,
-  };
-
-  static defaultProps = {
-    allStation: [],
-    loadingList: false,
-    hasError: false,
-  };
-
   state = {
     mapLoaded: false,
     region: {
@@ -95,5 +81,19 @@ const mapStateToProps = state => (
     hasError: state.allReducer.hasError,
   }
 );
+
+MapScreen.propTypes = {
+  fetchAll: PropTypes.func.isRequired,
+  allStation: PropTypes.arrayOf(PropTypes.object),
+  navigation: PropTypes.object.isRequired,
+  hasError: PropTypes.bool,
+  loadingList: PropTypes.bool,
+};
+
+MapScreen.defaultProps = {
+  allStation: [],
+  loadingList: false,
+  hasError: false,
+};
 
 export default connect(mapStateToProps, { fetchAll, reset })(MapScreen);

@@ -3,11 +3,6 @@ import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
 
 class FadeInView extends Component {
-  static propTypes = {
-    style: PropTypes.object.isRequired,
-    children: PropTypes.object.isRequired,
-  };
-
   state = {
     fadeAnim: new Animated.Value(0),
   };
@@ -38,5 +33,10 @@ class FadeInView extends Component {
     );
   }
 }
+
+FadeInView.propTypes = {
+  style: PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired,
+};
 
 export default FadeInView;
