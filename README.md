@@ -11,4 +11,4 @@ $ yarn start
 
 #### Example of running  application on IOS simulator
 
-![welcome](images/welcome.png) ![map_whole](images/map_whole.png)![map_zoom](images/map_zoom.png) ![table](images/table.png)
+![welcome](images/welcome.png) ![map_whole](images/map_whole.png) ![table](images/table.png)
