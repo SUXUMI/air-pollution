@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 
 import { fetchAll, reset } from '../actions';
 import { renderLoading, hasErrorFunction } from '../utils/functions';
@@ -31,29 +31,43 @@ class MapScreen extends Component {
     this.setState({ region });
   };
 
+  createMarker = (city, navigation) => (
+    <Marker
+      key={Math.random()}
+      coordinate={{
+        latitude: parseFloat(city.gegrLat),
+        longitude: parseFloat(city.gegrLon),
+      }}
+      image={require('../../images/map-pin_50.png')} // eslint-disable-line global-require
+      onCalloutPress={() => {
+        navigation.navigate(
+          'show',
+          { stationId: city.id, cityName: city.stationName },
+        );
+      }}
+    >
+      <Callout>
+        <Text>{city.stationName}</Text>
+      </Callout>
+    </Marker>
+  );
+
+
   renderMapView() {
     const { allStation, navigation } = this.props;
     const { region } = this.state;
+
     return (
       <View style={{ flex: 1 }}>
         <MapView
           style={{ flex: 1 }}
           region={region}
+          zoomEnabled
+          scrollEnabled
           onRegionChangeComplete={this.onRegionChangeComplete}
         >
           {allStation.map(city => (
-            <Marker
-              key={Math.random()}
-              coordinate={{
-                latitude: parseFloat(city.gegrLat),
-                longitude: parseFloat(city.gegrLon),
-              }}
-              description={city.stationName}
-              onPress={() => {
-                navigation.navigate('show',
-                  { stationId: city.id, cityName: city.stationName });
-              }}
-            />
+            this.createMarker(city, navigation)
           ))}
         </MapView>
       </View>

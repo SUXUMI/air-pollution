@@ -14,7 +14,6 @@ export function hasErrorFunction() {
   return (
     <View style={styles.view}>
       <Text style={styles.text}>
-        {' '}
 There is something wrong with API,
         try again later!!
       </Text>

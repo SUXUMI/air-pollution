@@ -48,23 +48,21 @@ class ShowScreen extends Component {
     const colors = Object.keys(limits).map(key => limits[key]);
     const resultWithColor = changeArray(result, colors);
 
-    const { container, textComp, head, text, border, legend, row } = styles;
-
     return (
-      <View style={container}>
-        <Text style={textComp}>Station:</Text>
-        <Text style={textComp}>{cityName}</Text>
-        <Table borderStyle={border}>
-          <Row data={tableHead} style={head} textStyle={text} />
+      <View style={styles.container}>
+        <Text style={styles.textComp}>Station:</Text>
+        <Text style={styles.textComp}>{cityName}</Text>
+        <Table borderStyle={styles.border}>
+          <Row data={tableHead} style={styles.head} textStyle={styles.text} />
           {
               resultWithColor.map(rowData => (
-                <TableWrapper key={Math.random()} style={row}>
+                <TableWrapper key={Math.random()} style={styles.row}>
                   {
                       rowData.slice(0, -1).map((cellData, cellIndex) => (
                         <Cell
                           key={Math.random()}
                           data={cellData}
-                          textStyle={[text,
+                          textStyle={[styles.text,
                             {
                               color: cellIndex === 1
                                 ? rowData[2]
@@ -77,12 +75,12 @@ class ShowScreen extends Component {
               ))
             }
         </Table>
-        <Text style={[legend, { paddingTop: 15 }]}>Legend:</Text>
-        <Text style={legend}>
+        <Text style={[styles.legend, { paddingTop: 15 }]}>Legend:</Text>
+        <Text style={styles.legend}>
           <Text style={{ color: 'orange' }}>Orange </Text>
             - limit values exceeded
         </Text>
-        <Text style={legend}>
+        <Text style={styles.legend}>
           <Text style={{ color: 'red' }}>Red </Text>
             - alarm values exceeded
         </Text>
@@ -97,7 +95,7 @@ class ShowScreen extends Component {
       <View style={{ flex: 1 }}>
         {loading && renderLoading()}
         {hasError && hasErrorFunction()}
-        {oneStation && sensors && !loading && !hasError
+        {oneStation && sensors && !hasError && !loading
           && this.renderTable()}
       </View>
     );
@@ -119,12 +117,32 @@ const styles = ({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  head: { height: 40, backgroundColor: '#ABDCD7' },
-  text: { margin: 6, textAlign: 'center', fontWeight: 'bold' },
-  legend: { marginTop: 10, fontWeight: 'bold' },
-  border: { borderWidth: 1, borderColor: '#009688' },
-  row: { flexDirection: 'row' },
+  container: {
+    flex: 1,
+    padding: 16,
+    paddingTop: 30,
+    backgroundColor: '#fff',
+  },
+  head: {
+    height: 40,
+    backgroundColor: '#ABDCD7',
+  },
+  text: {
+    margin: 6,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  legend: {
+    marginTop: 10,
+    fontWeight: 'bold',
+  },
+  border: {
+    borderWidth: 1,
+    borderColor: '#009688',
+  },
+  row: {
+    flexDirection: 'row',
+  },
 });
 
 ShowScreen.propTypes = {
