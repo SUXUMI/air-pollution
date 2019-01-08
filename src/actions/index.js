@@ -57,14 +57,10 @@ export function fetchBySensorId(id) {
   const request = axios.get(URL);
 
   return (dispatch) => {
-    dispatch(loading(true));
-    request.then((response) => {
-      dispatch(loading(false));
-      return dispatch({
-        type: ADD_VALUE_FOR_SENSORS,
-        payload: response,
-      });
-    });
+    request.then(response => dispatch({
+      type: ADD_VALUE_FOR_SENSORS,
+      payload: response,
+    }));
   };
 }
 
