@@ -38,7 +38,7 @@ class MapScreen extends Component {
         latitude: parseFloat(city.gegrLat),
         longitude: parseFloat(city.gegrLon),
       }}
-      image={require('../../images/map-pin_50.png')} // eslint-disable-line global-require
+      image={require('../../assets/map-pin_50.png')} // eslint-disable-line global-require
       onCalloutPress={() => {
         navigation.navigate(
           'show',
